@@ -33,7 +33,6 @@ class IosCalcState extends State<IosCalc> {
 
   void _setOperator(String op) {
     if (_borderNumber != '') _setNumber(double.parse(_borderNumber));
-    if (_operators != '') _equal();
     if (_oldNumber != 0) {
       _operators = op;
       _borderNumber = '';
@@ -55,8 +54,8 @@ class IosCalcState extends State<IosCalc> {
   }
 
   void _equal() {
-    if (_borderNumber != '') _setNumber(double.parse(_borderNumber));
-    if (_currentNumber != 0) {
+    if (_borderNumber != '') {
+      _setNumber(double.parse(_borderNumber));
       _calculate();
     }
   }
@@ -65,7 +64,7 @@ class IosCalcState extends State<IosCalc> {
     String result;
     switch (_operators) {
       case '/':
-        result = (_currentNumber == 0)
+        result = (_currentNumber == 0.0)
             ? 'Infinity'
             : (_oldNumber / _currentNumber).toString();
         break;
@@ -79,7 +78,7 @@ class IosCalcState extends State<IosCalc> {
         result = (_oldNumber - _currentNumber).toString();
         break;
     }
-    _borderNumber = '';
+    _resetCalc();
     _setBorderNumber(result);
   }
 
